@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #eef6ff;
+  --foreground: #1e293b;
+}
+
+html.dark {
+  --background: #0b1e33;
+  --foreground: #e0f2fe;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: linear-gradient(180deg, #e9f3fd 0%, #f4faff 45%, #edf6ff 100%);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+html.dark body {
+  background: linear-gradient(180deg, #0b1e33 0%, #0f2740 100%);
+  color: #e0f2fe;
+}
