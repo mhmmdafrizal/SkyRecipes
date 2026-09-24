@@ -88,6 +88,34 @@ node lib/halal.mjs
 | `npm run build` | Production build          |
 | `npm run start` | Serve the production build |
 | `npm run lint`  | Run ESLint                |
+| `npm run test:e2e` | Run Playwright e2e + security tests |
+| `npm run knip`  | Find unused dependencies and exports |
+
+## Testing
+
+**E2E + security tests** run with [Playwright](https://playwright.dev) against a dedicated dev server on port `3100` (started automatically — port `3000` is skipped to avoid clashing with other projects):
+
+```bash
+npm run test:e2e        # run all e2e + security tests
+npx playwright test --grep "security"   # security suite only
+npx playwright show-report              # view the HTML report
+```
+
+What's covered:
+
+- **Home app** (`tests/app.spec.ts`) — search, halal filter, load more, favorites persistence, ingredients modal, state restore after visiting a recipe, theme toggle, error + retry
+- **Recipe page** (`tests/recipe.spec.ts`) — 404 on invalid ids; the happy path hits the real Edamam API and is skipped when credentials are missing
+- **Security** (`tests/security.spec.ts`) — XSS via search input / recipe labels / localStorage favorites, no API-key leakage into client payloads, security headers present
+
+Home-app tests **mock `/api/recipes`** (intercepted in the browser) so they're deterministic and never hit the Edamam API or its quota. Only the "real recipe page" test and the credentials-leak check read `.env.local`.
+
+**Security headers** (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) are set globally in `next.config.ts`.
+
+**Unused-code audit** with [knip](https://knip.dev):
+
+```bash
+npm run knip
+```
 
 ## Deploy
 
