@@ -2,6 +2,10 @@
 
 Search thousands of recipes, filter by diet and health labels (including a halal categorization), and save the ones you love.
 
+## Screenshot
+
+![Desktop Mode](./public/screenshots/Screenshot.png)
+
 ## Tech Stack
 
 - **[Next.js](https://nextjs.org)** 16 — App Router
